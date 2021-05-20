@@ -20,6 +20,9 @@ namespace cs_all_spell.Models
         public string Description { get; set; }
 
         [Required]
+        public int CastingTime { get; set; }
+
+        [Required]
         public bool Material { get; set; }
 
         [Required]
@@ -30,9 +33,6 @@ namespace cs_all_spell.Models
 
         [Required]
         public bool Concentration { get; set; }
-
-        [Required]
-        public int CastingTime { get; set; }
 
     }
 }

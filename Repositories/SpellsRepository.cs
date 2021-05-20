@@ -32,9 +32,9 @@ namespace cs_all_spell.Repositories
         {
             string sql = @"
             INSERT INTO spells
-            (name, school, level, description, material, verbal, somatic, concentration, castingTime)
+            (name, school, level, description, castingTime, material, verbal, somatic, concentration)
             VALUES
-            (@Name, @School, @Level, @Description, @Material, @Verbal, @Somatic, @Concentration, @CastingTime)
+            (@Name, @School, @Level, @Description, @CastingTime,  @Material, @Verbal, @Somatic, @Concentration)
             SELECT LAST_INSERT_ID()";
             newSpell.Id = _db.ExecuteScalar<int>(sql, newSpell);
             return newSpell;
@@ -49,11 +49,11 @@ namespace cs_all_spell.Repositories
                 school = @School,
                 level = @Level,
                 description = @Description,
+                castingTime = @CastingTime,
                 material = @Material,
                 verbal = @Verbal,
                 somatic = @Somatic,
-                concentration = @Concentration,
-                castingTime = @CastingTime";
+                concentration = @Concentration";
             int affectedRows = _db.Execute(sql, original);
             return affectedRows == 1;
         }
