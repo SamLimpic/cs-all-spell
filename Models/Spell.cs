@@ -14,10 +14,10 @@ namespace cs_all_spell.Models
         public string School { get; set; }
 
         [Required]
-        public int Level { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public string Description { get; set; }
+        public int Level { get; set; }
 
         [Required]
         public int CastingTime { get; set; }

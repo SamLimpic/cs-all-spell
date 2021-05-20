@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace cs_all_spell.Controllers
 {
     [ApiController]
-    [Route("[controller")]
+    [Route("[controller]")]
 
     [Authorize]
     // STUB[epic=Auth] Adds Authguard to all routes on the whole controller
