@@ -64,9 +64,13 @@ namespace cs_all_spell
 
             // NOTE Transient Services
             services.AddTransient<AccountsService>();
+            services.AddTransient<SpellsService>();
+            services.AddTransient<ReagentsService>();
 
             // NOTE Transient Repo's 
             services.AddTransient<AccountsRepository>();
+            services.AddTransient<SpellsRepository>();
+            services.AddTransient<ReagentsRepository>();
 
             // TODO[epic=DB] database Connection
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
