@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using cs_all_spell.Models;
 using Dapper;
 
@@ -16,19 +17,55 @@ namespace cs_all_spell.Repositories
             _db = db;
         }
 
-        internal IEnumerable<Reagent> GetAll()
+        public IEnumerable<Reagent> GetAll()
+        // NOTE GET ALL & PUPULATE
         {
-            string sql = "SELECT * FROM reagents";
-            return _db.Query<Reagent>(sql);
+            string sql = @"
+            SELECT 
+            r.*,
+            s.*
+            FROM reagents r
+            JOIN spells s ON r.spellId = s.id";
+            return _db.Query<Reagent, Spell, Reagent>(sql, (reagent, spell) =>
+            {
+                reagent.Spell = spell;
+                return reagent;
+            }, splitOn: "id");
         }
 
-        internal Reagent GetById(int id)
+        public IEnumerable<Reagent> GetBySpellId(string id)
+        // NOTE GET BY SPELL ID & PUPULATE
         {
-            string sql = "SELECT * FROM reagents WHERE id == @id";
-            return _db.QueryFirstOrDefault<Reagent>(sql, new { id });
+            string sql = @"
+            SELECT 
+            r.*,
+            s.*
+            FROM reagents r
+            JOIN spells s ON r.spellId = s.id";
+            return _db.Query<Reagent, Spell, Reagent>(sql, (reagent, spell) =>
+            {
+                reagent.Spell = spell;
+                return reagent;
+            }, new { id }, splitOn: "id");
         }
 
-        internal Reagent Create(Reagent newReagent)
+        public Reagent GetById(int id)
+        // NOTE GET BY ID & PUPULATE
+        {
+            string sql = @"
+            SELECT 
+            r.*,
+            s.*
+            FROM reagents r
+            JOIN spells s ON r.spellId = s.id";
+            return _db.Query<Reagent, Spell, Reagent>(sql, (reagent, spell) =>
+            {
+                reagent.Spell = spell;
+                return reagent;
+            }, new { id }, splitOn: "id").FirstOrDefault();
+        }
+
+        public Reagent Create(Reagent newReagent)
         {
             string sql = @"
             INSERT INTO reagents
@@ -40,7 +77,7 @@ namespace cs_all_spell.Repositories
             return newReagent;
         }
 
-        internal bool Update(Reagent original)
+        public bool Update(Reagent original)
         {
             string sql = @"
             UPDATE reagents
@@ -52,7 +89,7 @@ namespace cs_all_spell.Repositories
             return affectedRows == 1;
         }
 
-        internal bool Delete(int id)
+        public bool Delete(int id)
         {
             string sql = "DELETE FROM reagents WHERE id = @id LIMIT 1";
             int affectedRows = _db.Execute(sql, new { id });

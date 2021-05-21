@@ -11,6 +11,9 @@ namespace cs_all_spell.Models
         [Required]
         public int SpellId { get; set; }
 
+        // STUB[epic=Populate]
+        public Spell Spell { get; set; }
+
         [Required]
         public string Name { get; set; }
 

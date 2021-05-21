@@ -61,3 +61,11 @@
 --     (3, "Bone", "A pinch")
 
 -- DELETE FROM reagents
+
+
+-- NOTE PUPULATE
+-- SELECT
+--      r.*,
+--      s.*
+-- FROM reagents r
+-- JOIN spells s ON r.spellId = s.id
