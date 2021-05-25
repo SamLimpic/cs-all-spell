@@ -10,16 +10,23 @@ namespace cs_all_spell.Services
 
         private readonly SpellsRepository _repo;
 
+        private readonly SpellReagentsRepository _srRepo;
 
-        public SpellsService(SpellsRepository repo)
+
+        public SpellsService(SpellsRepository repo, SpellReagentsRepository srRepo)
         {
             _repo = repo;
+            _srRepo = srRepo;
         }
+
+
 
         internal IEnumerable<Spell> GetAll()
         {
             return _repo.GetAll();
         }
+
+
 
         internal Spell GetById(int id)
         {
@@ -31,11 +38,22 @@ namespace cs_all_spell.Services
             return spell;
         }
 
+
+
+        internal IEnumerable<SpellReagentView> GetSpellReagents(int id)
+        {
+            return _srRepo.GetSpellReagents(id);
+        }
+
+
+
         internal Spell Create(Spell newSpell)
         {
             Spell spell = _repo.Create(newSpell);
             return newSpell;
         }
+
+
 
         internal Spell Update(Spell edit)
         {
@@ -49,6 +67,8 @@ namespace cs_all_spell.Services
             }
             throw new Exception("Something has gone wrong...");
         }
+
+
 
         internal void DeleteSpell(int id)
         {

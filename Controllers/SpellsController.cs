@@ -17,8 +17,9 @@ namespace cs_all_spell.Controllers
             _service = service;
         }
 
-        [HttpGet]
 
+
+        [HttpGet]
         public ActionResult<IEnumerable<Spell>> getAll()
         {
             try
@@ -31,6 +32,8 @@ namespace cs_all_spell.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+
 
         [HttpGet("{id}")]
         public ActionResult<Spell> GetById(int id)
@@ -45,6 +48,24 @@ namespace cs_all_spell.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+
+
+        [HttpGet("{id}/reagents")]
+        public ActionResult<IEnumerable<SpellReagentView>> GetSpellReagents(int id)
+        {
+            try
+            {
+                IEnumerable<SpellReagentView> reagents = _service.GetSpellReagents(id);
+                return Ok(reagents);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
 
         [HttpPost]
         public ActionResult<Spell> Create([FromBody] Spell newSpell)

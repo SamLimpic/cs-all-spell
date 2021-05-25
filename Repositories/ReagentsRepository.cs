@@ -18,51 +18,55 @@ namespace cs_all_spell.Repositories
         }
 
         public IEnumerable<Reagent> GetAll()
-        // NOTE GET ALL & PUPULATE
         {
-            string sql = @"
-            SELECT 
-            r.*,
-            s.*
-            FROM reagents r
-            JOIN spells s ON r.spellId = s.id";
-            return _db.Query<Reagent, Spell, Reagent>(sql, (reagent, spell) =>
-            {
-                reagent.Spell = spell;
-                return reagent;
-            }, splitOn: "id");
+            // NOTE GET ALL & PUPULATE
+            //     string sql = @"
+            //     SELECT 
+            //     r.*,
+            //     s.*
+            //     FROM reagents r
+            //     JOIN spells s ON r.spellId = s.id";
+            //     return _db.Query<Reagent, Spell, Reagent>(sql, (reagent, spell) =>
+            //     {
+            //         reagent.Spell = spell;
+            //         return reagent;
+            //     }, splitOn: "id");
+            string sql = "SELECT * FROM reagents";
+            return _db.Query<Reagent>(sql).ToList();
         }
 
-        public IEnumerable<Reagent> GetBySpellId(string id)
+        // public IEnumerable<Reagent> GetBySpellId(int id)
+        // {
         // NOTE GET BY SPELL ID & PUPULATE
-        {
-            string sql = @"
-            SELECT 
-            r.*,
-            s.*
-            FROM reagents r
-            JOIN spells s ON r.spellId = s.id";
-            return _db.Query<Reagent, Spell, Reagent>(sql, (reagent, spell) =>
-            {
-                reagent.Spell = spell;
-                return reagent;
-            }, new { id }, splitOn: "id");
-        }
+        //     string sql = @"
+        //     SELECT 
+        //     r.*,
+        //     s.*
+        //     FROM reagents r
+        //     JOIN spells s ON r.spellId = s.id";
+        //     return _db.Query<Reagent, Spell, Reagent>(sql, (reagent, spell) =>
+        //     {
+        //         reagent.Spell = spell;
+        //         return reagent;
+        //     }, new { id }, splitOn: "id");
+        // }
 
         public Reagent GetById(int id)
-        // NOTE GET BY ID & PUPULATE
         {
-            string sql = @"
-            SELECT 
-            r.*,
-            s.*
-            FROM reagents r
-            JOIN spells s ON r.spellId = s.id";
-            return _db.Query<Reagent, Spell, Reagent>(sql, (reagent, spell) =>
-            {
-                reagent.Spell = spell;
-                return reagent;
-            }, new { id }, splitOn: "id").FirstOrDefault();
+            // NOTE GET BY ID & PUPULATE
+            //     string sql = @"
+            //     SELECT 
+            //     r.*,
+            //     s.*
+            //     FROM reagents r
+            //     JOIN spells s ON r.spellId = s.id";
+            //     return _db.Query<Reagent, Spell, Reagent>(sql, (reagent, spell) =>
+            //     {
+            //         reagent.Spell = spell;
+            //         return reagent;
+            //     }, new { id }, splitOn: "id").FirstOrDefault();
+            string sql = "SELECT * FROM reagents WHERE id = @id";
+            return _db.QueryFirstOrDefault<Reagent>(sql, new { id });
         }
 
         public Reagent Create(Reagent newReagent)
